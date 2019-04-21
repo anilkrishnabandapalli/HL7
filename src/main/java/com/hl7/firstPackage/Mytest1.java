@@ -29,10 +29,10 @@ public class Mytest1 {
             // create the HL7 message
             // this AdtMessageFactory class is not from HAPI but my own wrapper
             // check my GitHub page or see my earlier article for reference
-            ADT_A01 adtMessage = (ADT_A01) AdtMessageFactory.createMessage("A01");
+            ADT_A01 adtMessage = (ADT_A01) AdtMessageFactory.createMessage("A01",HL7Message);
 
             // create a new MLLP client over the specified port
-            Connection connection = context.newClient("66.151.252.106", PORT_NUMBER, false);
+            Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
 
             // The initiator which will be used to transmit our message
             Initiator initiator = connection.getInitiator();

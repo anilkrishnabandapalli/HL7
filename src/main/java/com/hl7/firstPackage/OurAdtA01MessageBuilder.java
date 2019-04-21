@@ -40,10 +40,10 @@ public class OurAdtA01MessageBuilder {
         MSH mshSegment = _adtMessage.getMSH();
         mshSegment.getFieldSeparator().setValue("|");
         mshSegment.getEncodingCharacters().setValue("^~\\&");
-        mshSegment.getSendingApplication().getNamespaceID().setValue("Our System");
-        mshSegment.getSendingFacility().getNamespaceID().setValue("Our Facility");
-        mshSegment.getReceivingApplication().getNamespaceID().setValue("Their Remote System");
-        mshSegment.getReceivingFacility().getNamespaceID().setValue("Their Remote Facility");
+        mshSegment.getSendingApplication().getNamespaceID().setValue("ECW");
+        mshSegment.getSendingFacility().getNamespaceID().setValue("Shaila");
+        mshSegment.getReceivingApplication().getNamespaceID().setValue("ECW");
+        mshSegment.getReceivingFacility().getNamespaceID().setValue("LFMC");
         mshSegment.getDateTimeOfMessage().getTimeOfAnEvent().setValue(currentDateTimeString);
         mshSegment.getMessageControlID().setValue(getSequenceNumber());
         mshSegment.getVersionID().getVersionID().setValue("2.4");
@@ -58,13 +58,14 @@ public class OurAdtA01MessageBuilder {
     private void createPidSegment(String hL7Message) throws DataTypeException {
         PID pid = _adtMessage.getPID();
         XPN patientName = pid.getPatientName(0);
-        patientName.getFamilyName().getSurname().setValue("Mouse");
-        patientName.getGivenName().setValue("Mickey");
-        pid.getPatientIdentifierList(0).getID().setValue("19900101");
+        patientName.getFamilyName().getSurname().setValue("Test");
+        patientName.getGivenName().setValue("Test");
+        pid.getPatientIdentifierList(0).getID().setValue("AB13330");
         XAD patientAddress = pid.getPatientAddress(0);
-        patientAddress.getStreetAddress().getStreetOrMailingAddress().setValue("123 Main Street");
-        patientAddress.getCity().setValue("Lake Buena Vista");
-        patientAddress.getStateOrProvince().setValue("FL");
+        patientAddress.getStreetAddress().getStreetOrMailingAddress().setValue("21 ANY STREET APARTMENT 300B");
+        patientAddress.getCity().setValue("JAMAICA PLAIN");
+        patientAddress.getStateOrProvince().setValue("MA");
+        patientAddress.getZipOrPostalCode().setValue("02130");
         patientAddress.getCountry().setValue("USA");
     }
 
@@ -72,13 +73,13 @@ public class OurAdtA01MessageBuilder {
         PV1 pv1 = _adtMessage.getPV1();
         pv1.getPatientClass().setValue("O"); // to represent an 'Outpatient'
         PL assignedPatientLocation = pv1.getAssignedPatientLocation();
-        assignedPatientLocation.getFacility().getNamespaceID().setValue("Some Treatment Facility Name");
-        assignedPatientLocation.getPointOfCare().setValue("Some Point of Care");
-        pv1.getAdmissionType().setValue("ALERT");
+        assignedPatientLocation.getFacility().getNamespaceID().setValue("");
+        assignedPatientLocation.getPointOfCare().setValue("");
+        //pv1.getAdmissionType().setValue("ALERT");
         XCN referringDoctor = pv1.getReferringDoctor(0);
-        referringDoctor.getIDNumber().setValue("19900101");
-        referringDoctor.getFamilyName().getSurname().setValue("Smith");
-        referringDoctor.getGivenName().setValue("Jack");
+        referringDoctor.getIDNumber().setValue("1326018813");
+        referringDoctor.getFamilyName().getSurname().setValue("GRIEVESON");
+        referringDoctor.getGivenName().setValue("JOHN");
         referringDoctor.getIdentifierTypeCode().setValue("456789");
         pv1.getAdmitDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
     }
