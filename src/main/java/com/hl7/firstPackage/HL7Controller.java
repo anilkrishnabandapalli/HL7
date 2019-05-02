@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,9 +19,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ca.uhn.hl7v2.DefaultHapiContext;
+import ca.uhn.hl7v2.HL7Exception;
+import ca.uhn.hl7v2.HapiContext;
+import ca.uhn.hl7v2.model.Message;
+import ca.uhn.hl7v2.protocol.ReceivingApplication;
+import ca.uhn.hl7v2.protocol.ReceivingApplicationException;
+
 @ComponentScan
 @RestController
-public class HL7Controller {
+public class HL7Controller implements ReceivingApplication {
+	
+	private static HapiContext context = new DefaultHapiContext();
 
 	@RequestMapping("/redirectWithRedirectView")
 	public void redirectWithUsingRedirectView(){
@@ -48,19 +58,18 @@ public class HL7Controller {
 //    }
 	
 	@RequestMapping(value="/", method = RequestMethod.POST)
-    public String indexPost(@RequestBody String str , HttpServletRequest request, HttpServletResponse response) throws IOException {
-		System.out.println("Hi and the Message we got is "+request);
+    public Message indexPost(@RequestBody Message receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+		String receivedEncodedMessage = context.getPipeParser().encode(receivedMessage);
+		System.out.println("Hi and the Message we got is "+receivedEncodedMessage);
 		File file = new File("c://Users//Shaila Cholli//Desktop//testFile1.txt");
 		FileWriter writer = new FileWriter(file);
-		writer.write(str);
+		writer.write(receivedEncodedMessage);
 		writer.close();
-		
-		response.setContentType("text/plain");
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.getOutputStream().flush();
-		
-		
-        return "Greetings from Spring Boot!";
+		try {
+        return receivedMessage.generateACK();
+		}catch (IOException e) {
+            throw new HL7Exception(e);
+        }
     }
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
@@ -68,4 +77,15 @@ public class HL7Controller {
 		System.out.println("HI");
         return "Greetings from Spring Boot!";
     }
+
+	@Override
+	public Message processMessage(Message theMessage, Map<String, Object> theMetadata)
+			throws ReceivingApplicationException, HL7Exception {
+		return null;
+	}
+
+	@Override
+	public boolean canProcess(Message theMessage) {
+		return true;
+	}
 }

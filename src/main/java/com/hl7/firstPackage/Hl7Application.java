@@ -26,20 +26,6 @@ public class Hl7Application {
 		SpringApplication.run(Hl7Application.class, args);
 	}
 	
-	@Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-            String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
-
-        };
-    }
 	public void comment() throws IOException, ParseException{ //main(String[] args) throws IOException, ParseException {
 		
 		Map<String, String> messageMap = new HashMap<String, String>();

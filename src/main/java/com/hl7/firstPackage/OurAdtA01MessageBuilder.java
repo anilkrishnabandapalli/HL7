@@ -46,7 +46,7 @@ public class OurAdtA01MessageBuilder {
         mshSegment.getReceivingFacility().getNamespaceID().setValue("LFMC");
         mshSegment.getDateTimeOfMessage().getTimeOfAnEvent().setValue(currentDateTimeString);
         mshSegment.getMessageControlID().setValue(getSequenceNumber());
-        mshSegment.getVersionID().getVersionID().setValue("2.4");
+        mshSegment.getVersionID().getVersionID().setValue("2.1");
     }
 
     private void createEvnSegment(String currentDateTimeString, String hL7Message) throws DataTypeException {
