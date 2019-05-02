@@ -144,9 +144,9 @@ public class OurOruR01MessageBuilder {
     private void CreatePv1Segment(List<String> pv1HL7Strings) throws DataTypeException {
         PV1 pv1 = _oruR01Message.getPATIENT_RESULT().getPATIENT().getVISIT().getPV1();
         pv1.getPatientClass().setValue("O"); // to represent an 'Outpatient'
-        PL assignedPatientLocation = pv1.getAssignedPatientLocation();
-        assignedPatientLocation.getFacility().getNamespaceID().setValue("Some Treatment Facility Name");
-        assignedPatientLocation.getPointOfCare().setValue("Some Point of Care");
+        //PL assignedPatientLocation = pv1.getAssignedPatientLocation();
+        //assignedPatientLocation.getFacility().getNamespaceID().setValue("Some Treatment Facility Name");
+        //assignedPatientLocation.getPointOfCare().setValue("Some Point of Care");
         //pv1.getAdmissionType().setValue("ALERT"); AB Not Applicable
         
         pv1.getVisitNumber().getID().setValue(pv1HL7Strings.get(1));;
@@ -176,9 +176,8 @@ public class OurOruR01MessageBuilder {
         obr.getFillerOrderNumber().getUniversalID().setValue(obxHL7Strings.get(3));
         //obr.getUniversalServiceIdentifier().getText().setValue("Document");
         obr.getObservationEndDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
-        obr.getSpecimenActionCode().setValue(obxHL7Strings.get(4));;
+        obr.getSpecimenActionCode().setValue(obxHL7Strings.get(4).split("\\^")[0]+" "+obxHL7Strings.get(4).split("\\^")[1]);
         obr.getResultStatus().setValue("F");
-        obr.getObservationDateTime().getTimeOfAnEvent().setValue(obxHL7Strings.get(4));
         obr.getPriority().setValue(obxHL7Strings.get(5));
         
         obr.getOrderingProvider(0).getFamilyName().getSurname().setValue(obxHL7Strings.get(16).split("\\^")[1]);
@@ -196,10 +195,10 @@ public class OurOruR01MessageBuilder {
         Varies value = obx.getObservationValue(0);
         ED encapsulatedData = new ED(_oruR01Message);
         //String base64EncodedStringOfPdfReport = _ourBase64Helper.ConvertToBase64String(new File("C:\\HL7TestInputFiles\\Sample Pathology Lab Report.pdf"));
-        encapsulatedData.getEd1_SourceApplication().getHd1_NamespaceID().setValue("Shaila A");
-        encapsulatedData.getTypeOfData().setValue("AP"); //see HL7 table 0191: Type of referenced data
-        encapsulatedData.getDataSubtype().setValue("PDF");
-        encapsulatedData.getEncoding().setValue("Base64");
+        encapsulatedData.getEd1_SourceApplication().getHd1_NamespaceID().setValue("Shaila");
+        //encapsulatedData.getTypeOfData().setValue("AP"); //see HL7 table 0191: Type of referenced data
+        //encapsulatedData.getDataSubtype().setValue("PDF");
+        //encapsulatedData.getEncoding().setValue("Base64");
         
         //encapsulatedData.getData().setValue(base64EncodedStringOfPdfReport);
         encapsulatedData.getData().setValue("*****Testing with eClinicals******");
