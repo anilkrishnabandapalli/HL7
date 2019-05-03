@@ -10,7 +10,7 @@ import ca.uhn.hl7v2.parser.Parser;
 
 public class ORUGenerator {
 
-	private static int PORT_NUMBER = 57550;
+	private static int PORT_NUMBER = 16929;
 	
 	// In HAPI, almost all things revolve around a context object
     private static HapiContext context = new DefaultHapiContext();
@@ -26,7 +26,7 @@ public class ORUGenerator {
             Message oruMessage = OruMessageFactory.CreateMessage();
 
             // create a new MLLP client over the specified port
-            Connection connection = context.newClient("localhost", PORT_NUMBER, false);
+            Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
 
             // The initiator which will be used to transmit our message
             Initiator initiator = connection.getInitiator();
