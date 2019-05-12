@@ -174,12 +174,15 @@ public class OurOruR01MessageBuilder {
         obr.getSetIDOBR().setValue("1");
         obr.getPlacerOrderNumber().getUniversalID().setValue(obxHL7Strings.get(2));
         obr.getFillerOrderNumber().getUniversalID().setValue(obxHL7Strings.get(3));
+        //obr.getFillerOrderNumber().getName().S
+        obr.getFillerOrderNumber().getEntityIdentifier().setValue("4.0"+"");
         //obr.getUniversalServiceIdentifier().getText().setValue("Document");
-        obr.getObservationEndDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
+        //obr.getObservationEndDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
+        obr.getObservationDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
         obr.getSpecimenActionCode().setValue(obxHL7Strings.get(4).split("\\^")[0]+" "+obxHL7Strings.get(4).split("\\^")[1]);
         obr.getResultStatus().setValue("F");
         obr.getPriority().setValue(obxHL7Strings.get(5));
-        
+        obr.getSpecimenReceivedDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
         obr.getOrderingProvider(0).getFamilyName().getSurname().setValue(obxHL7Strings.get(16).split("\\^")[1]);
         obr.getOrderingProvider(0).getGivenName().setValue(obxHL7Strings.get(16).split("\\^")[2]);//+" "+ obxHL7Strings.get(16).split("\\^")[3]);
         
