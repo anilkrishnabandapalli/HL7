@@ -176,7 +176,8 @@ public class OurOruR01MessageBuilder {
         obr.getFillerOrderNumber().getUniversalID().setValue(obxHL7Strings.get(3));
         //obr.getFillerOrderNumber().getName().S
         obr.getFillerOrderNumber().getEntityIdentifier().setValue("4.0"+"");
-        //obr.getUniversalServiceIdentifier().getText().setValue("Document");
+        obr.getUniversalServiceIdentifier().getIdentifier().setValue(obxHL7Strings.get(4).split("\\^")[0]);
+        obr.getUniversalServiceIdentifier().getText().setValue(obxHL7Strings.get(4).split("\\^")[1]);
         //obr.getObservationEndDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
         obr.getObservationDateTime().getTimeOfAnEvent().setValue(getCurrentTimeStamp());
         obr.getSpecimenActionCode().setValue(obxHL7Strings.get(4).split("\\^")[0]+" "+obxHL7Strings.get(4).split("\\^")[1]);
