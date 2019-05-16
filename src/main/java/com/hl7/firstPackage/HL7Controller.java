@@ -57,19 +57,27 @@ public class HL7Controller implements ReceivingApplication {
 //        return "Greetings from Spring Boot!";
 //    }
 	
+	/*
+	 * @RequestMapping(value="/", method = RequestMethod.POST) public Message
+	 * indexPost(@RequestBody Message receivedMessage) throws
+	 * ReceivingApplicationException, HL7Exception,IOException { String
+	 * receivedEncodedMessage = context.getPipeParser().encode(receivedMessage);
+	 * System.out.println("Hi and the Message we got is "+receivedEncodedMessage);
+	 * File file = new File("c://Users//Shaila Cholli//Desktop//testFile1.txt");
+	 * FileWriter writer = new FileWriter(file);
+	 * writer.write(receivedEncodedMessage); writer.close(); try { return
+	 * receivedMessage.generateACK(); }catch (IOException e) { throw new
+	 * HL7Exception(e); } }
+	 */
+	
 	@RequestMapping(value="/", method = RequestMethod.POST)
-    public Message indexPost(@RequestBody Message receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
-		String receivedEncodedMessage = context.getPipeParser().encode(receivedMessage);
-		System.out.println("Hi and the Message we got is "+receivedEncodedMessage);
+    public void indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+		System.out.println("Hi and the Message we got is "+receivedMessage);
 		File file = new File("c://Users//Shaila Cholli//Desktop//testFile1.txt");
 		FileWriter writer = new FileWriter(file);
-		writer.write(receivedEncodedMessage);
+		writer.write(receivedMessage);
 		writer.close();
-		try {
-        return receivedMessage.generateACK();
-		}catch (IOException e) {
-            throw new HL7Exception(e);
-        }
+		
     }
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
