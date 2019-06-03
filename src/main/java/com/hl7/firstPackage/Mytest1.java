@@ -26,36 +26,36 @@ public class Mytest1 {
     			+"NTE|1||The^uterus^is^anteverted,^appears^unremarkable^in^size,^shape,^and^contour.^The^endometrium^appears^homogeneous^and^unremarkable.^Unremarkable^vascularity^is^noted^within^the^endometrium^and^the^submucosa.^The^myometrium^and^endocervix^appear^homogeneous^and^unremarkable.The^right^ovary^appears^unremarkable;^an^11mm^simple^cyst^is^noted^in^the^para-adnexal^area.^The^left^ovary^contains^a^21mm^dominant^follicle/simple^cyst.^There^is^no^tenderness^or^free^fluid^in^the^para-adnexal^areas/cds";
         try {
 
-            // create the HL7 message
-            // this AdtMessageFactory class is not from HAPI but my own wrapper
-            // check my GitHub page or see my earlier article for reference
-            ADT_A01 adtMessage = (ADT_A01) AdtMessageFactory.createMessage("A01",HL7Message);
-
-            // create a new MLLP client over the specified port
-            Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
-
-            // The initiator which will be used to transmit our message
-            Initiator initiator = connection.getInitiator();
-            
-            HL7Service ourHl7Server = context.newServer(PORT_NUMBER, false);
-            
-            ourHl7Server.startAndWait();
-            Parser ourPipeParser = context.getPipeParser();
-            // send the previously created HL7 message over the connection established
-            Parser parser = context.getPipeParser();
-            System.out.println("Sending message:" + "\n" + parser.encode(adtMessage));
-            Message response = initiator.sendAndReceive(adtMessage);
-
-            // display the message response received from the remote party
-            String responseString = parser.encode(response);
-            System.out.println("Received response:\n" + responseString);
-            
-            String responseString1 = ourPipeParser.encode(response);
-            System.out.println("Received a message response:\n" + responseString1);
-            
-            connection.close();
-            
-            ourHl7Server.stopAndWait();
+//            // create the HL7 message
+//            // this AdtMessageFactory class is not from HAPI but my own wrapper
+//            // check my GitHub page or see my earlier article for reference
+//            ADT_A01 adtMessage = (ADT_A01) AdtMessageFactory.createMessage("A01",HL7Message);
+//            System.out.println(adtMessage);
+//            // create a new MLLP client over the specified port
+//            Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
+//
+//            // The initiator which will be used to transmit our message
+//            Initiator initiator = connection.getInitiator();
+//            
+//            HL7Service ourHl7Server = context.newServer(PORT_NUMBER, false);
+//            
+//            ourHl7Server.startAndWait();
+//            Parser ourPipeParser = context.getPipeParser();
+//            // send the previously created HL7 message over the connection established
+//            Parser parser = context.getPipeParser();
+//            System.out.println("Sending message:" + "\n" + parser.encode(adtMessage));
+//            Message response = initiator.sendAndReceive(adtMessage);
+//
+//            // display the message response received from the remote party
+//            String responseString = parser.encode(response);
+//            System.out.println("Received response:\n" + responseString);
+//            
+//            String responseString1 = ourPipeParser.encode(response);
+//            System.out.println("Received a message response:\n" + responseString1);
+//            
+//            connection.close();
+//            
+//            ourHl7Server.stopAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();

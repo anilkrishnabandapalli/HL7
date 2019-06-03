@@ -1,0 +1,72 @@
+
+  body {
+    font-family: sans-serif;
+  }
+  
+  .container {
+    padding:10px;
+    text-align: center;
+    margin: 3em auto;
+    max-width: 300px;
+    background-color: white;
+    
+    
+  }
+  .browsing{
+      text-align: start;
+  }
+  .file-1{
+    border: 1px solid #DFDFDF;
+    border-radius: 5px;
+  }
+  .file-2{
+    border: 1px solid #DFDFDF;
+    border-radius: 5px;
+  }
+  input[type='file'] {
+    display: none;
+  }
+  
+  .patient-file-info {
+    font-size: 0.9em;
+   
+  }
+  .report-file-info {
+    font-size: 0.9em;
+  }
+  
+  .file-buttons {
+    background: #EDEDED;
+    color: black;
+    min-height: 35px;
+    padding: 10px;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .file-buttons:hover {
+    background: #edf3f2;
+    cursor: pointer;
+  }
+
+  .send-btn {
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+    background: #EDEDED;
+    color: black;
+    min-height: 35px;
+    padding: 10px;
+    border: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .send-btn:hover {
+    background: #edf3f2;
+    cursor: pointer;
+  }

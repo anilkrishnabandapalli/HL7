@@ -16,7 +16,7 @@ public class MyTest {
         
     public static void main(String[] args) throws Exception {
 
-    	String HL7Message = "MSH|"+"^"+"~"+"\""+"&"+"|ECW|Shaila|RAP1100|BN|20190410151932||ORU^R01||T|1.0"
+    	String HL7Message = "MSH|"+"^"+"~"+"\""+"&"+"|ECW|Shaila|RAP1100|BN|20190410151932||ORU^R01||P|2.1"
     			+"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC|||"
     			+"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||137042|"
     			+"ORC||1234|||||||||||OrdProvider"
@@ -29,21 +29,22 @@ public class MyTest {
             // this AdtMessageFactory class is not from HAPI but my own wrapper
             // check my GitHub page or see my earlier article for reference
             ADT_A01 adtMessage = (ADT_A01) AdtMessageFactory.createMessage("A01", HL7Message);
-
+            System.out.print(adtMessage);
             // create a new MLLP client over the specified port
-            Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
-
-            // The initiator which will be used to transmit our message
-            Initiator initiator = connection.getInitiator();
-
-            // send the previously created HL7 message over the connection established
-            Parser parser = context.getPipeParser();
-            System.out.println("Sending message:" + "\n" + parser.encode(adtMessage));
-            Message response = initiator.sendAndReceive(adtMessage);
-
-            // display the message response received from the remote party
-            String responseString = parser.encode(response);
-            System.out.println("Received response:\n" + responseString);
+//            Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
+//
+//            // The initiator which will be used to transmit our message
+//            Initiator initiator = connection.getInitiator();
+//
+//            // send the previously created HL7 message over the connection established
+//            Parser parser = context.getPipeParser();
+//            System.out.println("Sending message:" + "\n" + parser.encode(adtMessage));
+//            Message response = initiator.sendAndReceive(adtMessage);
+//            
+//
+//            // display the message response received from the remote party
+//            String responseString = parser.encode(response);
+//            System.out.println("Received response:\n" + responseString);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,36 +1,47 @@
 package com.hl7.firstPackage;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.uhn.hl7v2.DefaultHapiContext;
+import com.hl7.service.Hl7MessageHandler;
+
 import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.HapiContext;
 import ca.uhn.hl7v2.model.Message;
 import ca.uhn.hl7v2.protocol.ReceivingApplication;
 import ca.uhn.hl7v2.protocol.ReceivingApplicationException;
 
-@ComponentScan
 @RestController
 public class HL7Controller implements ReceivingApplication {
 	
-	private static HapiContext context = new DefaultHapiContext();
+
+	@Autowired
+	Hl7MessageHandler hl7MessageHandler;
+
+	@RequestMapping(value="/", method = RequestMethod.POST)
+    public void indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+		hl7MessageHandler.processReceivedMessage(receivedMessage);
+		
+    }
+	
+	@RequestMapping(value="/view", method = RequestMethod.POST)
+	public void processData(@RequestBody String body) {
+		System.out.println(body);
+		
+	}
+	
+	@RequestMapping(value="/", method = RequestMethod.GET)
+    public String indexGet(@RequestBody String str) {
+		System.out.println("HI");
+        return "Greetings from Spring Boot!";
+    }
 
 	@RequestMapping("/redirectWithRedirectView")
 	public void redirectWithUsingRedirectView(){
@@ -69,22 +80,6 @@ public class HL7Controller implements ReceivingApplication {
 	 * receivedMessage.generateACK(); }catch (IOException e) { throw new
 	 * HL7Exception(e); } }
 	 */
-	
-	@RequestMapping(value="/", method = RequestMethod.POST)
-    public void indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
-		System.out.println("Hi and the Message we got is "+receivedMessage);
-		File file = new File("c://Users//Shaila Cholli//Desktop//testFile1.txt");
-		FileWriter writer = new FileWriter(file);
-		writer.write(receivedMessage);
-		writer.close();
-		
-    }
-	
-	@RequestMapping(value="/", method = RequestMethod.GET)
-    public String indexGet(@RequestBody String str) {
-		System.out.println("HI");
-        return "Greetings from Spring Boot!";
-    }
 
 	@Override
 	public Message processMessage(Message theMessage, Map<String, Object> theMetadata)
