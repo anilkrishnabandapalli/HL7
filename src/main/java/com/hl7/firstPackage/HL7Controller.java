@@ -81,6 +81,7 @@ public class HL7Controller implements ReceivingApplication {
 	 * HL7Exception(e); } }
 	 */
 
+
 	@Override
 	public Message processMessage(Message theMessage, Map<String, Object> theMetadata)
 			throws ReceivingApplicationException, HL7Exception {
