@@ -1,24 +1,18 @@
 package com.hl7.service;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Properties;
+import java.time.LocalDate;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,54 +20,45 @@ public class EmailUtility {
 
 	private static Logger log = LoggerFactory.getLogger(EmailUtility.class);
 
-	public void sendMail(String sendTo, String subject, String message, String fileName) {
+	@Autowired
+	private JavaMailSender javaMailSender;
+	
+	@Value("${application.savepath}")
+	private String path;
+	
+	@Value("${spring.mail.username}")
+	private String mailFrom;
 
-//		Setup SMTP 
-		Properties properties = new Properties();
-		properties.put("mail.smtp.host", "smtp.mail.yahoo.com");
-		properties.put("mail.smtp.socketFactory.port", "465");
-		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.port", "465");
+	public void sendMail(String mailTo, String subject, String body, String fileName) {
 
-		Session session = Session.getDefaultInstance(properties, new Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("radiologyreport@yahoo.com", "963852123");
-			}
-		});
+		LocalDate date = LocalDate.now();
+		String homeDir = System.getProperty("user.home");
+		
+		MimeMessage message = javaMailSender.createMimeMessage();
 
-		log.debug("Sending Mail to {}", sendTo);
-
-//		session.setDebug(true);
-
-//		Create Message
-		Message mail = new MimeMessage(session);
+		MimeMessageHelper helper;
 		try {
-			mail.setFrom(new InternetAddress("radiologyreport@yahoo.com", "Do not reply"));
-			mail.setRecipients(Message.RecipientType.TO, InternetAddress.parse(sendTo));
-			mail.setSubject(subject);
+			helper = new MimeMessageHelper(message, true);
 
-			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent(message, "text/html");
+			helper.setFrom(new InternetAddress(mailFrom, "Do not reply"));
+			helper.setTo(mailTo);
 
-			MimeBodyPart attachmentBodyPart = new MimeBodyPart();
-			attachmentBodyPart.attachFile(new File(fileName));
+			helper.setSubject(subject);
 
-			Multipart multipart = new MimeMultipart();
-			multipart.addBodyPart(mimeBodyPart);
-			multipart.addBodyPart(attachmentBodyPart);
+			helper.setText(body, true);
 
-			mail.setContent(multipart);
+			helper.addAttachment("Report.pdf", new File(homeDir + "/" + path + "/" + date.toString() + "/"+fileName));
 
-//			Send Message
-			Transport.send(mail);
+			javaMailSender.send(message);
 
-		} catch (UnsupportedEncodingException e) {
-			log.error("Exception occured : ", e);
 		} catch (MessagingException e) {
-			log.error("Exception occured : ", e);
-		} catch (IOException e) {
-			log.error("Exception occured : ", e);
+			log.error("Error sending mail");
+			log.error("Exception : ", e);
+		} catch (Exception e) {
+			log.error("Error sending mail");
+			log.error("Exception : ", e);
 		}
+
 	}
+
 }

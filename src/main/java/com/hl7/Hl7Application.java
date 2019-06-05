@@ -1,4 +1,4 @@
-package com.hl7.firstPackage;
+package com.hl7;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

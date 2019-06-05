@@ -4,7 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +27,13 @@ public class HL7Controller implements ReceivingApplication {
 
 	@Autowired
 	Hl7MessageHandler hl7MessageHandler;
-
+	
+	private static Logger log=LoggerFactory.getLogger(HL7Controller.class);
+	
 	@RequestMapping(value="/", method = RequestMethod.POST)
     public void indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+		
+		log.debug("Message received is : {}",receivedMessage);
 		hl7MessageHandler.processReceivedMessage(receivedMessage);
 		
     }

@@ -1,7 +1,9 @@
 package com.hl7.service;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -11,6 +13,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.hl7.model.OBRInfo;
@@ -28,12 +31,18 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 public class ORMConverter {
 
+	@Value("${application.savepath}")
+	private String path;
+	
+	@Value("${application.mailto}")
+	private String mailTo;
+
 	@Autowired
 	ReportGenerator reportGenerator;
-
+	
 	@Autowired
 	EmailUtility emailUtility;
-
+	
 	private static Logger log = LoggerFactory.getLogger(ORMConverter.class);
 
 	public void convertReceivedMessage(String receivedMessage) {
@@ -58,7 +67,6 @@ public class ORMConverter {
 		JRBeanCollectionDataSource patientOBR = getPatientOBR(ormMessage);
 
 //		Generate PDF
-		String reportFileName = patientName + ".pdf";
 
 		Map<String, Object> parameters = new LinkedHashMap<String, Object>();
 		parameters.put("patientName", patientName);
@@ -70,11 +78,34 @@ public class ORMConverter {
 		parameters.put("orderDate", orderDate);
 		parameters.put("OBRDataset", patientOBR);
 
+		String fileName = patientName.replace(' ', '_') + "_"
+				+ new SimpleDateFormat("MMddyyyyHHmmss").format(new Date());
+		String reportFileName = fileName + ".pdf";
+		String messageFileName = fileName + ".txt";
+
+		renameReceivedMessageFile(messageFileName);
 		reportGenerator.generateAndSavePdf(reportFileName, parameters);
 
 //		Send Mail
-		emailUtility.sendMail("mitali@jeavio.com", "Test Mail", "Checking Attachment", reportFileName);
+		String subject= "Lab Order for "+patientName.replace(' ', '_');
+		emailUtility.sendMail(mailTo,subject," ", reportFileName);
 
+		log.info("ORM Conversion Operation completed");
+	}
+
+	private void renameReceivedMessageFile(String messageFileName) {
+
+		LocalDate date = LocalDate.now();
+		String homeDir = System.getProperty("user.home");
+		File file = new File(homeDir + "/" + path + "/" + date.toString() + "/test.txt");
+		File newFile = new File(homeDir + "/" + path + "/" + date.toString()+"/"+messageFileName);
+
+		if (file.renameTo(newFile)) {
+			log.info("Successfully saved received message at {}", newFile);
+		} else {
+			log.error("Error saving received HL7 message with desired filename");
+			log.error("Received message is currently saved in {}", file);
+		}
 	}
 
 	private ORM_O01 getORM(String receivedMessage) {
@@ -88,6 +119,7 @@ public class ORMConverter {
 		} catch (HL7Exception e) {
 			log.error("Exception occured : ", e);
 		}
+
 		return ormMessage;
 	}
 
@@ -108,7 +140,7 @@ public class ORMConverter {
 		String dob = "N/A";
 		try {
 			Date oldFormatDate = hl7Format.parse(patient.getPid7_DateOfBirth().encode());
-			dob = (new SimpleDateFormat("dd/MM/yyyy")).format(oldFormatDate);
+			dob = (new SimpleDateFormat("MM/dd/yyyy")).format(oldFormatDate);
 		} catch (ParseException e) {
 			log.error("Exception occured : ", e);
 		} catch (HL7Exception e) {
@@ -157,7 +189,7 @@ public class ORMConverter {
 
 	private String getOrderDate(ORM_O01 ormMessage) {
 		String orderDate = "N/A";
-		SimpleDateFormat orderFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		SimpleDateFormat orderFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		try {
 			Date hl7OrderDate = (new SimpleDateFormat("yyyyMMddHHmmss"))
 					.parse(ormMessage.getORDER().getORC().getOrc9_DateTimeOfTransaction().encode());
@@ -171,7 +203,7 @@ public class ORMConverter {
 	}
 
 	private String getToday() {
-		SimpleDateFormat orderFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		SimpleDateFormat orderFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		String today = orderFormat.format(new Date());
 		return today;
 	}
