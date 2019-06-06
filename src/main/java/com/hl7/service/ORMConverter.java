@@ -252,8 +252,8 @@ public class ORMConverter {
 		OBRInfo obrInfo = new OBRInfo();
 		obrInfo.setCode(getObrCode((OBR) patient_obr));
 		obrInfo.setDiagnosticName(getObrDiagnosticName((OBR) patient_obr));
-		obrInfo.setFasting(getObrPriority((OBR) patient_obr));
-		obrInfo.setPriority(getObrFasting((OBR) patient_obr));
+		obrInfo.setFasting(getObrFasting((OBR) patient_obr));
+		obrInfo.setPriority(getObrPriority((OBR) patient_obr));
 
 		String assessment = "N/A";
 		for (int index2 = index + 1; index2 < orderNames.length; index2++) {
