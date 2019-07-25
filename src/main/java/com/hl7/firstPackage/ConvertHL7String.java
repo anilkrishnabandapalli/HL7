@@ -30,6 +30,9 @@ public class ConvertHL7String {
 	public static List<String> extraxtMSH(List<String> HL7Strings, String headerString, int lengthOfSeg) {
 		List<String> mshStrings = new ArrayList<String>();
 		int mshIndex = HL7Strings.indexOf(headerString);
+		if(mshIndex == -1) {
+			mshIndex = HL7Strings.indexOf("\n"+headerString);
+		}
 		for(int i= mshIndex; i < mshIndex+lengthOfSeg; i++) {
 			mshStrings.add(HL7Strings.get(i));
 			System.out.println("Index"+i+": "+HL7Strings.get(i));

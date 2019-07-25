@@ -5,7 +5,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,35 +56,41 @@ public class HL7Controller implements ReceivingApplication {
 //        return "Greetings from Spring Boot!";
 //    }
 	
-	@RequestMapping(value="/", method = RequestMethod.POST)
-    public Message indexPost1(@RequestBody Message receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
-		String receivedEncodedMessage = context.getPipeParser().encode(receivedMessage);
-		System.out.println("Hi and the Message we got is "+receivedEncodedMessage);
-		File file = new File("c://Users//Shaila Cholli//Desktop//testFile1.txt");
-		FileWriter writer = new FileWriter(file);
-		writer.write(receivedEncodedMessage);
-		writer.close();
-		try {
-        return receivedMessage.generateACK();
-		}catch (IOException e) {
-            throw new HL7Exception(e);
-        }
-    }
-	
-	
-	
 //	@RequestMapping(value="/", method = RequestMethod.POST)
-//    public void indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
-//		System.out.println("Hi and the Message we got is "+receivedMessage);
+//    public Message processMessage(@RequestBody Message receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+//		String receivedEncodedMessage = context.getPipeParser().encode(receivedMessage);
+//		System.out.println("Hi and the Message we got is "+receivedEncodedMessage);
 //		File file = new File("c://Users//Shaila Cholli//Desktop//testFile1.txt");
 //		FileWriter writer = new FileWriter(file);
-//		writer.write(receivedMessage);
+//		writer.write(receivedEncodedMessage);
 //		writer.close();
-//		
+//		try {
+//        return receivedMessage.generateACK();
+//		}catch (IOException e) {
+//            throw new HL7Exception(e);
+//        }
 //    }
 	
+	
+	
+	@RequestMapping(value="/", method = RequestMethod.POST)
+    public String indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+		 String currentDateTimeString = getCurrentTimeStamp();
+		System.out.println("Hi and the Message we got is "+receivedMessage);
+		File file = new File("c://Users//Shaila Cholli//Desktop//HL7 Orders//"+currentDateTimeString+".txt");
+		FileWriter writer = new FileWriter(file);
+		writer.write(receivedMessage);
+		writer.close();
+		
+		return "Recieved HL7 Request";
+		
+    }
+	private String getCurrentTimeStamp() {
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    }
+
 	@RequestMapping(value="/", method = RequestMethod.GET)
-    public String indexGet(@RequestBody String str) {
+    public String indexGet() {
 		System.out.println("HI");
         return "Greetings from Spring Boot!";
     }
