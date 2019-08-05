@@ -26,7 +26,14 @@ public class ORUGenerator {
             Message oruMessage = OruMessageFactory.CreateMessage();
 
             // create a new MLLP client over the specified port
-            Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
+            //Connection connection = context.newClient("63.224.151.17", PORT_NUMBER, false);
+            Connection connection = null;
+            try {
+            	 connection = context.newClient("63.224.151.17", 16929, false);
+            } catch (Exception e) {
+            	e.printStackTrace();
+            }
+            
 
             // The initiator which will be used to transmit our message
             Initiator initiator = connection.getInitiator();

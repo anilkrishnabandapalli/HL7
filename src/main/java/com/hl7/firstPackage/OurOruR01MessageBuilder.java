@@ -45,20 +45,78 @@ public class OurOruR01MessageBuilder {
         // you want
         _oruR01Message.initQuickstart("ORU", "R01", "P");
         
-        String HL7RawMessage = "MSH|^~\\&|ECW|LFMC|||20190408145903||ORM^O01|31320190408145903|P|2.3|"+
-        		"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||"+
-        		"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||137042|"+
-        		"GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|"+
-        		"ORC|NW|137042|||||||20190408145903|||1326018813^GRIEVESON^JOHN^|"+
-        		"OBR|1|137042||SA_004^US abdomen Limited e-sch|||20190408145800|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|"+
-        		"DG1|1|I10|G91.2|(Idiopathic) normal pressure hydrocephalus|"+
-        		"OBX|1|ST|Lab022^4 hour fasting prior to exam||yes|"+
-        		"OBX|2|ST|Lab023^8 hour fasting prior to exam||Yes|"+
-        		"OBX|3|ST|Lab024^Fasting is required||Yes|"+
-        		"OBX|4|ST|Lab025^Fasting is Not Required||no|"+
-        		"OBX|5|ST|Lab026^Full Bladder is required||Yes|"+
-        		"OBX|6|ST|Lab027^Full Bladder is not required||NO|"+
-        		"OBX|7|ST|Lab028^No preparation required for exam||Yes|";
+//        String HL7RawMessage = "MSH|^~\\&|ECW|LFMC|||20190408145903||ORM^O01|31320190408145903|P|2.3|"+
+//        		"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||"+
+//        		"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||137042|"+
+//        		"GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|"+
+//        		"ORC|NW|137042|||||||20190408145903|||1326018813^GRIEVESON^JOHN^|"+
+//        		"OBR|1|137042||SA_004^US abdomen Limited e-sch|||20190408145800|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|"+
+//        		"DG1|1|I10|G91.2|(Idiopathic) normal pressure hydrocephalus|"+
+//        		"OBX|1|ST|Lab022^4 hour fasting prior to exam||yes|"+
+//        		"OBX|2|ST|Lab023^8 hour fasting prior to exam||Yes|"+
+//        		"OBX|3|ST|Lab024^Fasting is required||Yes|"+
+//        		"OBX|4|ST|Lab025^Fasting is Not Required||no|"+
+//        		"OBX|5|ST|Lab026^Full Bladder is required||Yes|"+
+//        		"OBX|6|ST|Lab027^Full Bladder is not required||NO|"+
+//        		"OBX|7|ST|Lab028^No preparation required for exam||Yes|";
+//        
+//        HL7RawMessage = "MSH|^~\\&|ECW|LFMC|||20190521123005||ORM^O01|32220190521123005|P|2.3|" + 
+//        		"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||" + 
+//        		"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||140334|" + 
+//        		"GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|" + 
+//        		"ORC|NW|140334|||||||20190521123005|||1326018813^GRIEVESON^JOHN^|" + 
+//        		"OBR|1|140334||SA_004^US abdomen Limited e-sch|||20190521112900|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|" + 
+//        		"DG1|1|I10|A42.1|Abdominal actinomycosis|" + 
+//        		"OBX|1|ST|Lab022^4 hour fasting prior to exam||NA|" + 
+//        		"OBX|2|ST|Lab023^8 hour fasting prior to exam||Yes|" + 
+//        		"OBX|3|ST|Lab024^Fasting is required||Yes|" + 
+//        		"OBX|4|ST|Lab025^Fasting is Not Required||NA|" + 
+//        		"OBX|5|ST|Lab026^Full Bladder is required||Yes|" + 
+//        		"OBX|6|ST|Lab027^Full Bladder is not required||NA|" + 
+//        		"OBX|7|ST|Lab028^No preparation required for exam||Yes| " + 
+//        		"";
+        
+//        HL7RawMessage = "MSH|^~\\&|ECW|LFMC|||20190521123238||ORM^O01|32320190521123238|P|2.3|" + 
+//        		"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||" + 
+//        		"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||140335|" + 
+//        		"GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|" + 
+//        		"ORC|NW|140335|||||||20190521123238|||1326018813^GRIEVESON^JOHN^|" + 
+//        		"OBR|1|140335||SA_011^US Chest|||20190521113200|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|" + 
+//        		"DG1|1|I10|I71.4|Abdominal aortic aneurysm (AAA) without rupture|" + 
+//        		"OBX|1|ST|Lab071^4 hour fasting prior to exam||NA|" + 
+//        		"OBX|2|ST|Lab072^8 hour fasting prior to exam||Yes|" + 
+//        		"OBX|3|ST|Lab073^Fasting is required||Yes|" + 
+//        		"OBX|4|ST|Lab074^Fasting is Not Required||NA|" + 
+//        		"OBX|5|ST|Lab075^Full Bladder is required||Yes|";
+        
+		/*
+		 * String HL7RawMessage =
+		 * "MSH|^~\\&|ECW|LFMC|||20190529120904||ORM^O01|32820190529120904|P|2.3|" +
+		 * "PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||"
+		 * + "PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||140928|" +
+		 * "GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|"
+		 * + "ORC|NW|140928|||||||20190529120904|||1326018813^GRIEVESON^JOHN^|" +
+		 * "OBR|1|140928||SA_004^US abdomen Limited e-sch|||20190529120800|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|"
+		 * + "DG1|1|I10|G91.2|(Idiopathic) normal pressure hydrocephalus|" +
+		 * "OBX|1|ST|Lab022^4 hour fasting prior to exam||NA|" +
+		 * "OBX|2|ST|Lab023^8 hour fasting prior to exam||Yes|" +
+		 * "OBX|3|ST|Lab024^Fasting is required||Yes|" +
+		 * "OBX|4|ST|Lab025^Fasting is Not Required||NA|" +
+		 * "OBX|5|ST|Lab026^Full Bladder is required||No|";
+		 */
+        String HL7RawMessage= "MSH|^~\\&|ECW|LFMC|||20190722154048||ORM^O01|36320190722154048|P|2.3|\n" + 
+        		"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||\n" + 
+        		"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||145494|\n" + 
+        		"GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|\n" + 
+        		"ORC|NW|145494|||||||20190722154048|||1326018813^GRIEVESON^JOHN^|\n" + 
+        		"OBR|1|145494||SA_005^US Aorta e-sch|||20190722154000|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|\n" + 
+        		"DG1|1|I10|I35.0|Nonrheumatic aortic (valve) stenosis|\n" + 
+        		"OBX|1|ST|Lab029^4 hour fasting prior to exam||NA|\n" + 
+        		"OBX|2|ST|Lab030^8 hour fasting prior to exam||Yes|\n" + 
+        		"OBX|3|ST|Lab031^Fasting is required||Yes|\n" + 
+        		"OBX|4|ST|Lab032^Fasting is Not Required||No|\n" + 
+        		"OBX|5|ST|Lab033^Full Bladder is required||Yes|\n" + 
+        		"";
         		List<String> HL7Strings = Arrays.asList(HL7RawMessage.split("\\|"));
 
         ConvertHL7String hl7String = new ConvertHL7String();
@@ -103,7 +161,7 @@ public class OurOruR01MessageBuilder {
         mshSegment.getDateTimeOfMessage().getTimeOfAnEvent().setValue(currentDateTimeString);
         mshSegment.getMessageControlID().setValue(getSequenceNumber());
         mshSegment.getProcessingID().getProcessingID().setValue("P");
-        mshSegment.getVersionID().getVersionID().setValue("2.1");
+        mshSegment.getVersionID().getVersionID().setValue("2.3");
     }
 
     private void CreatePidSegment(List<String> pidHL7Strings) throws DataTypeException {
@@ -128,17 +186,19 @@ public class OurOruR01MessageBuilder {
         XTN phoneNumberHome = pid.getPhoneNumberHome(0);
         phoneNumberHome.getPhoneNumber().setValue(pidHL7Strings.get(13));
         
-        XTN phoneNumberBusiness = pid.getPhoneNumberBusiness(0);
-        phoneNumberBusiness.getPhoneNumber().setValue(pidHL7Strings.get(14));
+        //XTN phoneNumberBusiness = pid.getPhoneNumberBusiness(0);
+        //phoneNumberBusiness.getPhoneNumber().setValue(pidHL7Strings.get(14));
         
         CE primaryLang = pid.getPrimaryLanguage();
         primaryLang.getIdentifier().setValue(pidHL7Strings.get(15));
         
-        pid.getMaritalStatus().getIdentifier().setValue(pidHL7Strings.get(16));
+       // pid.getMaritalStatus().getText().setValue(pidHL7Strings.get(16).split("\\^")[0]);
         
         pid.getPatientAccountNumber().getID().setValue(pidHL7Strings.get(18));
         
         pid.getSSNNumberPatient().setValue(pidHL7Strings.get(19));
+        
+        pid.getDateTimeOfBirth().getTimeOfAnEvent().setValue(pidHL7Strings.get(7));
     }
 
     private void CreatePv1Segment(List<String> pv1HL7Strings) throws DataTypeException {

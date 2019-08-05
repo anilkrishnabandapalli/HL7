@@ -3,11 +3,16 @@ package com.hl7.firstPackage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,6 +93,44 @@ public class HL7Controller implements ReceivingApplication {
 	 * HL7Exception(e); } }
 	 */
 
+//	@RequestMapping(value="/", method = RequestMethod.POST)
+//    public Message processMessage(@RequestBody Message receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+//		String receivedEncodedMessage = context.getPipeParser().encode(receivedMessage);
+//		System.out.println("Hi and the Message we got is "+receivedEncodedMessage);
+//		File file = new File("c://Users//Shaila Cholli//Desktop//testFile1.txt");
+//		FileWriter writer = new FileWriter(file);
+//		writer.write(receivedEncodedMessage);
+//		writer.close();
+//		try {
+//        return receivedMessage.generateACK();
+//		}catch (IOException e) {
+//            throw new HL7Exception(e);
+//        }
+//    }
+	
+	
+	
+	@RequestMapping(value="/", method = RequestMethod.POST)
+    public String indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+		 String currentDateTimeString = getCurrentTimeStamp();
+		System.out.println("Hi and the Message we got is "+receivedMessage);
+		File file = new File("c://Users//Shaila Cholli//Desktop//HL7 Orders//"+currentDateTimeString+".txt");
+		FileWriter writer = new FileWriter(file);
+		writer.write(receivedMessage);
+		writer.close();
+		
+		return "Recieved HL7 Request";
+		
+    }
+	private String getCurrentTimeStamp() {
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    }
+
+	@RequestMapping(value="/", method = RequestMethod.GET)
+    public String indexGet() {
+		System.out.println("HI");
+        return "Greetings from Spring Boot!";
+    }
 
 	@Override
 	public Message processMessage(Message theMessage, Map<String, Object> theMetadata)
