@@ -1,0 +1,13 @@
+*.class
+*.DS_Store
+# Package Files #
+*.jar
+*.war
+target/
+*/bin/
+.classpath
+.settings/
+logs/
+data/
+*~
+external.properties

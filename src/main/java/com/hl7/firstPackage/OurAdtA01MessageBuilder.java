@@ -28,7 +28,9 @@ public class OurAdtA01MessageBuilder {
         String currentDateTimeString = getCurrentTimeStamp();
         _adtMessage = new ADT_A01(); 
         //you can use the context class's newMessage method to instantiate a message if you want
+        
         _adtMessage.initQuickstart("ADT", "A01", "P");
+         
         createMshSegment(currentDateTimeString, hL7Message);
         createEvnSegment(currentDateTimeString, hL7Message);
         createPidSegment(hL7Message);
