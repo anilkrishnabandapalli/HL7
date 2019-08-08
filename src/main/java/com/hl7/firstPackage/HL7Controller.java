@@ -109,28 +109,28 @@ public class HL7Controller implements ReceivingApplication {
 //    }
 	
 	
-	
-	@RequestMapping(value="/", method = RequestMethod.POST)
-    public String indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
-		 String currentDateTimeString = getCurrentTimeStamp();
-		System.out.println("Hi and the Message we got is "+receivedMessage);
-		File file = new File("c://Users//Shaila Cholli//Desktop//HL7 Orders//"+currentDateTimeString+".txt");
-		FileWriter writer = new FileWriter(file);
-		writer.write(receivedMessage);
-		writer.close();
-		
-		return "Recieved HL7 Request";
-		
-    }
+//	
+//	@RequestMapping(value="/", method = RequestMethod.POST)
+//    public String indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+//		 String currentDateTimeString = getCurrentTimeStamp();
+//		System.out.println("Hi and the Message we got is "+receivedMessage);
+//		File file = new File("c://Users//Shaila Cholli//Desktop//HL7 Orders//"+currentDateTimeString+".txt");
+//		FileWriter writer = new FileWriter(file);
+//		writer.write(receivedMessage);
+//		writer.close();
+//		
+//		return "Recieved HL7 Request";
+//		
+//    }
 	private String getCurrentTimeStamp() {
         return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
     }
 
-	@RequestMapping(value="/", method = RequestMethod.GET)
-    public String indexGet() {
-		System.out.println("HI");
-        return "Greetings from Spring Boot!";
-    }
+//	@RequestMapping(value="/", method = RequestMethod.GET)
+//    public String indexGet() {
+//		System.out.println("HI");
+//        return "Greetings from Spring Boot!";
+//    }
 
 	@Override
 	public Message processMessage(Message theMessage, Map<String, Object> theMetadata)
