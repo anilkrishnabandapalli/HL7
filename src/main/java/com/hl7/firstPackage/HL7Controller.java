@@ -1,11 +1,20 @@
 package com.hl7.firstPackage;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,25 +44,50 @@ public class HL7Controller implements ReceivingApplication {
 	
 	private static Logger log=LoggerFactory.getLogger(HL7Controller.class);
 	
-	@RequestMapping(value="/", method = RequestMethod.POST)
-    public void indexPost(@RequestBody String receivedMessage) throws ReceivingApplicationException, HL7Exception,IOException {
+	@RequestMapping(value="/")
+    public void indexPost() throws ReceivingApplicationException, HL7Exception,IOException {
 		
-		log.debug("Message received is : {}",receivedMessage);
-		hl7MessageHandler.processReceivedMessage(receivedMessage);
+		final ExecutorService clientRequestPool = Executors.newFixedThreadPool(10);
+		//log.debug("Message received is : {}",receivedMessage);
+		HL7TCPServer hl7TCPServer = new HL7TCPServer();
+		hl7TCPServer.startServer(hl7MessageHandler);
+		try {
+            ServerSocket serverSocket = new ServerSocket(8088);
+            System.out.println("Waiting for eCW Client to connect...");
+            InputStream input = null;
+    		OutputStream output = null;
+            while (true) {
+               Socket clientSocket = serverSocket.accept();
+               input = clientSocket.getInputStream();
+				output = clientSocket.getOutputStream();
+				long time = System.currentTimeMillis();
+				output.write(("HTTP/1.1 200 OK\n\n Shaila Associates received your request!").getBytes());
+				System.out.println("eCW Client Request processed at: " + time);
+				
+				String receivedMessage1 = displayMessage(input);
+				System.out.println("Recieved Input is " + receivedMessage1);
+				
+				hl7MessageHandler.processReceivedMessage(receivedMessage1);
+				
+            }
+        } catch (IOException e) {
+            System.err.println("Unable to process ceCW Client request");
+            e.printStackTrace();
+        }
 		
     }
 	
-	@RequestMapping(value="/view", method = RequestMethod.POST)
-	public void processData(@RequestBody String body) {
-		System.out.println(body);
-		
-	}
-	
-	@RequestMapping(value="/", method = RequestMethod.GET)
-    public String indexGet(@RequestBody String str) {
-		System.out.println("HI");
-        return "Greetings from Spring Boot!";
-    }
+//	@RequestMapping(value="/view", method = RequestMethod.POST)
+//	public void processData(@RequestBody String body) {
+//		System.out.println(body);
+//		
+//	}
+//	
+//	@RequestMapping(value="/", method = RequestMethod.GET)
+//    public String indexGet(@RequestBody String str) {
+//		System.out.println("HI");
+//        return "Greetings from Spring Boot!";
+//    }
 
 	@RequestMapping("/redirectWithRedirectView")
 	public void redirectWithUsingRedirectView(){
@@ -141,5 +175,32 @@ public class HL7Controller implements ReceivingApplication {
 	@Override
 	public boolean canProcess(Message theMessage) {
 		return true;
+	}
+	
+private String displayMessage(InputStream input) {
+		
+		String currentDateTimeString = getCurrentTimeStamp();
+		Random rand = new Random();
+		byte[] messageByte = new byte[1000];
+		String dataString = "";
+		try 
+		{
+		        int bytesRead = input.read(messageByte);
+		        dataString += new String(messageByte, 0, bytesRead);
+		   
+		    //System.out.println("MESSAGE: " + dataString);
+		    
+		    File file = new File("c://Users//Shaila Cholli//Desktop//HL7 Orders//"+currentDateTimeString+rand.nextInt(100)+".txt");
+			FileWriter writer = new FileWriter(file);
+			writer.write(dataString);
+			writer.close();
+			
+			hl7MessageHandler.processReceivedMessage(dataString);
+		}
+		catch (Exception e)
+		{
+		    e.printStackTrace();
+		}
+		return dataString;
 	}
 }
