@@ -56,7 +56,7 @@ public class HL7Runnable extends Thread  implements ReceivingApplication  {
 			try {
 				output.close();
 				input.close();
-				clientSocket.close();
+				//clientSocket.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -50,30 +50,26 @@ public class HL7Controller implements ReceivingApplication {
 		final ExecutorService clientRequestPool = Executors.newFixedThreadPool(10);
 		//log.debug("Message received is : {}",receivedMessage);
 		HL7TCPServer hl7TCPServer = new HL7TCPServer();
-		hl7TCPServer.startServer(hl7MessageHandler);
-		try {
-            ServerSocket serverSocket = new ServerSocket(8088);
-            System.out.println("Waiting for eCW Client to connect...");
-            InputStream input = null;
-    		OutputStream output = null;
-            while (true) {
-               Socket clientSocket = serverSocket.accept();
-               input = clientSocket.getInputStream();
-				output = clientSocket.getOutputStream();
-				long time = System.currentTimeMillis();
-				output.write(("HTTP/1.1 200 OK\n\n Shaila Associates received your request!").getBytes());
-				System.out.println("eCW Client Request processed at: " + time);
-				
-				String receivedMessage1 = displayMessage(input);
-				System.out.println("Recieved Input is " + receivedMessage1);
-				
-				hl7MessageHandler.processReceivedMessage(receivedMessage1);
-				
-            }
-        } catch (IOException e) {
-            System.err.println("Unable to process ceCW Client request");
-            e.printStackTrace();
-        }
+		ServerSocket serverSocket = new ServerSocket(8088);
+		hl7TCPServer.startServer(serverSocket, hl7MessageHandler);
+		/*
+		 * try { ServerSocket serverSocket = new ServerSocket(8088);
+		 * System.out.println("Waiting for eCW Client to connect..."); InputStream input
+		 * = null; OutputStream output = null; while (true) { Socket clientSocket =
+		 * serverSocket.accept(); input = clientSocket.getInputStream(); output =
+		 * clientSocket.getOutputStream(); long time = System.currentTimeMillis();
+		 * output.write(("HTTP/1.1 200 OK\n\n Shaila Associates received your request!")
+		 * .getBytes()); System.out.println("eCW Client Request processed at: " + time);
+		 * 
+		 * String receivedMessage1 = displayMessage(input);
+		 * System.out.println("Recieved Input is " + receivedMessage1);
+		 * 
+		 * hl7MessageHandler.processReceivedMessage(receivedMessage1);
+		 * 
+		 * } } catch (IOException e) {
+		 * System.err.println("Unable to process ceCW Client request");
+		 * e.printStackTrace(); }
+		 */
 		
     }
 	

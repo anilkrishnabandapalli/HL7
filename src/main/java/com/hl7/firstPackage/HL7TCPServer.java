@@ -11,14 +11,14 @@ import com.hl7.service.Hl7MessageHandler;
 public class HL7TCPServer {
 
  
-	public void startServer(Hl7MessageHandler hl7MessageHandler) {
+	public void startServer(ServerSocket serverSocket, Hl7MessageHandler hl7MessageHandler) {
         final ExecutorService clientRequestPool = Executors.newFixedThreadPool(10);
 
         Runnable hl7ProcessingTask = new Runnable() {
             @Override
             public void run() {
                 try {
-                    ServerSocket serverSocket = new ServerSocket(8089);
+                    
                     System.out.println("Waiting for eCW Client to connect...");
                     while (true) {
                         Socket clientSocket = serverSocket.accept();
