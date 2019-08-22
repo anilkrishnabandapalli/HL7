@@ -117,6 +117,34 @@ public class OurOruR01MessageBuilder {
         		"OBX|4|ST|Lab032^Fasting is Not Required||No|\n" + 
         		"OBX|5|ST|Lab033^Full Bladder is required||Yes|\n" + 
         		"";
+        
+        HL7RawMessage="MSH|^~\\&|ECW|LFMC|||20190816114203||ORM^O01|37520190816114203|P|2.3|\n" + 
+        		"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||\n" + 
+        		"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||147372|\n" + 
+        		"GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|\n" + 
+        		"ORC|NW|147372|||||||20190816114203|||1326018813^GRIEVESON^JOHN^|\n" + 
+        		"OBR|1|147372||SA_008^US Carotid Duplex Bilateral e-sch|||20190816114100|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|\n" + 
+        		"DG1|1|I10|I70.0|Atherosclerosis of aorta|\n" + 
+        		"OBX|1|ST|Lab050^4 hour fasting prior to exam||NA|\n" + 
+        		"OBX|2|ST|Lab051^8 hour fasting prior to exam||Yes|\n" + 
+        		"OBX|3|ST|Lab052^Fasting is required||Yes|\n" + 
+        		"OBX|4|ST|Lab053^Fasting is Not Required||NA|\n" + 
+        		"OBX|5|ST|Lab054^Full Bladder is required||Yes|\n"
+        		;
+        
+        HL7RawMessage="MSH|^~\\&|ECW|LFMC|||20190816114953||ORM^O01|37620190816114953|P|2.3|\n" + 
+        		"PID|1|AB13330||AB13330|TEST^TEST^||19900101|Male|||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130||5084445555|||||^LFMC||\n" + 
+        		"PV1|1||||||1326018813^GRIEVESON^JOHN^|^^^|||||||||||147373|\n" + 
+        		"GT1|1||TEST^Test^||21 ANY STREET^APARTMENT 300B^JAMAICA PLAIN^MA^02130|5084445555||19900101|Male||1|\n" + 
+        		"ORC|NW|147373|||||||20190816114953|||1326018813^GRIEVESON^JOHN^|\n" + 
+        		"OBR|1|147373||SA_014^US Head /Neck Soft Tissue e-sch|||20190816114900|||||||||1326018813^GRIEVESON^JOHN||0||0|||||||^^^^^0|\n" + 
+        		"DG1|1|I10|G91.2|(Idiopathic) normal pressure hydrocephalus|\n" + 
+        		"OBX|1|ST|Lab092^4 hour fasting prior to exam||NA|\n" + 
+        		"OBX|2|ST|Lab093^8 hour fasting prior to exam||Yes|\n" + 
+        		"OBX|3|ST|Lab094^Fasting is required||Yes|\n" + 
+        		"OBX|4|ST|Lab095^Fasting is Not Required||NA|\n" + 
+        		"OBX|5|ST|Lab096^Full Bladder is required||Yes|\n" + 
+        		"";
         		List<String> HL7Strings = Arrays.asList(HL7RawMessage.split("\\|"));
 
         ConvertHL7String hl7String = new ConvertHL7String();

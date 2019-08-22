@@ -73,7 +73,7 @@ sendButton.addEventListener('click',function(event){
             reloadVariables();
           }
         };
-        xhttp.open("POST", "127.0.0.1:8080/view", true);
+        xhttp.open("POST", "http://localhost:8080/view", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         
     		var formData = new FormData();

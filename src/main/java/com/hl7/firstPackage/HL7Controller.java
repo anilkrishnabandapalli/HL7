@@ -73,11 +73,10 @@ public class HL7Controller implements ReceivingApplication {
 		
     }
 	
-//	@RequestMapping(value="/view", method = RequestMethod.POST)
-//	public void processData(@RequestBody String body) {
-//		System.out.println(body);
-//		
-//	}
+	@RequestMapping(value="/view", method = RequestMethod.POST)
+	public void processData(@RequestBody String body) {
+		System.out.println(body);
+	}
 //	
 //	@RequestMapping(value="/", method = RequestMethod.GET)
 //    public String indexGet(@RequestBody String str) {

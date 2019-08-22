@@ -93,7 +93,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="MyCalibri" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Order Form for LGH_RAD]]></text>
+				<text><![CDATA[Order Form for SHAILA ASSOCIATES]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="92" width="230" height="51" uuid="da02b589-762d-4bd2-9569-46be34343457"/>
@@ -101,7 +101,7 @@
 					<font fontName="MyCalibri" size="12"/>
 				</textElement>
 				<text><![CDATA[817 MERRIMACK STREET, SUITE 8 A
-LOWELL, MA, 0018543571
+LOWELL, MA, 01854-3548
 Tel: 978-453-0550 Fax: 978-453-0553]]></text>
 			</staticText>
 			<line>
@@ -160,6 +160,15 @@ Tel: 978-453-0550 Fax: 978-453-0553]]></text>
 				<textFieldExpression><![CDATA[$P{orderDate}]]></textFieldExpression>
 			</textField>
 			<staticText>
+				<reportElement x="359" y="30" width="51" height="21" uuid="b10a8893-64a8-4d16-b8f6-f924b7958dc7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="MyCalibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Today: ]]></text>
+			</staticText>
+			<staticText>
 				<reportElement x="325" y="9" width="85" height="21" uuid="52542f62-9263-4a71-ad6c-91777002f598">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -168,15 +177,6 @@ Tel: 978-453-0550 Fax: 978-453-0553]]></text>
 					<font fontName="MyCalibri" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Order Date: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="359" y="30" width="51" height="21" uuid="b10a8893-64a8-4d16-b8f6-f924b7958dc7">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="MyCalibri" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Today: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="9" width="55" height="21" uuid="42d6234b-102d-4445-8032-ea16ebb707a5">
