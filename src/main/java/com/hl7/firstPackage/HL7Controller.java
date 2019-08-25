@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -75,7 +77,14 @@ public class HL7Controller implements ReceivingApplication {
 	
 	@RequestMapping(value="/view", method = RequestMethod.POST)
 	public void processData(@RequestBody String body) {
-		System.out.println(body);
+		//System.out.println(body);
+		try {
+			String newString = URLDecoder.decode(body, "UTF-8");
+			System.out.println(newString);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 //	
 //	@RequestMapping(value="/", method = RequestMethod.GET)
