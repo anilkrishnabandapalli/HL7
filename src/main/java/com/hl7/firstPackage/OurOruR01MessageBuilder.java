@@ -38,7 +38,7 @@ public class OurOruR01MessageBuilder {
     * explore on your own Using fictional data here for illustration
     */
 
-    public ORU_R01 Build() throws HL7Exception, IOException {
+    public ORU_R01 Build(String hl7Message, String observation) throws HL7Exception, IOException {
         String currentDateTimeString = getCurrentTimeStamp();
         _oruR01Message = new ORU_R01();
         // you can use the context class's newMessage method to instantiate a message if
@@ -145,7 +145,7 @@ public class OurOruR01MessageBuilder {
         		"OBX|4|ST|Lab095^Fasting is Not Required||NA|\n" + 
         		"OBX|5|ST|Lab096^Full Bladder is required||Yes|\n" + 
         		"";
-        		List<String> HL7Strings = Arrays.asList(HL7RawMessage.split("\\|"));
+        		List<String> HL7Strings = Arrays.asList(hl7Message.split("\\|"));
 
         ConvertHL7String hl7String = new ConvertHL7String();
         CreateMshSegment(currentDateTimeString, hl7String.extraxtMSH(HL7Strings, "MSH", 12));
