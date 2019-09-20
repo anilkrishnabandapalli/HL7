@@ -34,13 +34,17 @@ public class ConvertHL7String {
 		List<String> mshStrings = new ArrayList<String>();
 		int mshIndex = HL7Strings.indexOf(headerString);
 		if(mshIndex == -1) {
-			mshIndex = HL7Strings.indexOf("\n"+headerString);
+			mshIndex = HL7Strings.indexOf("\r"+headerString);
+			//mshIndex = HL7Strings.matches(" PID");
+			//HL7Strings.get(12);
 		}
+		if(mshIndex != -1) {
 		for(int i= mshIndex; i < mshIndex+lengthOfSeg; i++) {
 			mshStrings.add(HL7Strings.get(i));
+			
 			System.out.println("Index"+i+": "+HL7Strings.get(i));
 		}
-		
+		}
 		return mshStrings;
 		
 	}

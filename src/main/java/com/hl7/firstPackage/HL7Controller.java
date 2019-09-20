@@ -81,14 +81,14 @@ public class HL7Controller implements ReceivingApplication {
 		//System.out.println(body);
 		try {
 			String newString = URLDecoder.decode(body, "UTF-8");
-			String hl7Message = StringUtils.substringBetween(newString, "Content-Type: text/plain", "-----------").trim();
+			String hl7Message = StringUtils.substringBetween(newString, "Content-Type: text/plain", "------").trim();
 			int onbservationStart = newString.lastIndexOf("Content-Type: text/plain");
-			int onbservationLast = newString.lastIndexOf("-----------");
+			int onbservationLast = newString.lastIndexOf("------");
 			String observation = newString.substring(onbservationStart, onbservationLast).trim();
 			observation = observation.replace("Content-Type: text/plain", "");
 			observation = observation.replaceAll("-", "");
 			//System.out.println(HL7Message+"\n"+observation.trim());
-			ORUGenerator oruGenerator = new ORUGenerator(hl7Message, observation);
+			ORUGenerator oruGenerator = new ORUGenerator(hl7Message, observation.trim());
 			System.out.println(oruGenerator);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block

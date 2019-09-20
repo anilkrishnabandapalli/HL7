@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.DataTypeException;
 import ca.uhn.hl7v2.model.Varies;
@@ -146,6 +148,7 @@ public class OurOruR01MessageBuilder {
         		"OBX|5|ST|Lab096^Full Bladder is required||Yes|\n" + 
         		"";
         		List<String> HL7Strings = Arrays.asList(hl7Message.split("\\|"));
+        		observation=observation.replace("\r\n", "\n");
 
         ConvertHL7String hl7String = new ConvertHL7String();
         CreateMshSegment(currentDateTimeString, hl7String.extraxtMSH(HL7Strings, "MSH", 12));
@@ -153,15 +156,15 @@ public class OurOruR01MessageBuilder {
         CreatePv1Segment(hl7String.extraxtMSH(HL7Strings, "PV1", 9));
         CreateORCSegment(hl7String.extraxtMSH(HL7Strings, "ORC", 13));
         CreateObrSegment(hl7String.extraxtMSH(HL7Strings, "OBR", 28));
-        CreateObxSegment(hl7String.extraxtMSH(HL7Strings, "OBX", 16));
-        CreateNTESegment(hl7String.extraxtMSH(HL7Strings, "NTE", 0));
+        CreateObxSegment(hl7String.extraxtMSH(HL7Strings, "OBX", 16), observation);
+        CreateNTESegment(hl7String.extraxtMSH(HL7Strings, "NTE", 0), observation);
         return _oruR01Message;
     }
 
-    private void CreateNTESegment(List<String> extraxtNTE) throws DataTypeException  {
+    private void CreateNTESegment(List<String> extraxtNTE, String observation ) throws DataTypeException  {
 		NTE nte = _oruR01Message.getPATIENT_RESULT().getPATIENT().getNTE();
 		
-		nte.getComment(0).setValue("Testing From Shaila Associates");
+		nte.getComment(0).setValue(observation);
 	}
 
 	private void CreateORCSegment(List<String> extraxtORC) throws DataTypeException {
@@ -278,7 +281,8 @@ public class OurOruR01MessageBuilder {
 
     }
 
-    private void CreateObxSegment(List<String> obxHL7Strings) throws DataTypeException, IOException {
+    private void CreateObxSegment(List<String> obxHL7Strings, String observation1) throws DataTypeException, IOException {
+    	if(obxHL7Strings != null && obxHL7Strings.size() > 0) {
         ORU_R01_OBSERVATION observation = _oruR01Message.getPATIENT_RESULT().getORDER_OBSERVATION().getOBSERVATION(0);
         OBX obx = observation.getOBX();
         obx.getSetIDOBX().setValue("0");
@@ -293,8 +297,9 @@ public class OurOruR01MessageBuilder {
         //encapsulatedData.getEncoding().setValue("Base64");
         
         //encapsulatedData.getData().setValue(base64EncodedStringOfPdfReport);
-        encapsulatedData.getData().setValue("*****Testing with eClinicals******");
+        encapsulatedData.getData().setValue(observation1);
         value.setData(encapsulatedData);
+    	}
     }
 
     private String getCurrentTimeStamp() {
