@@ -149,6 +149,7 @@ public class OurOruR01MessageBuilder {
         		"";
         		List<String> HL7Strings = Arrays.asList(hl7Message.split("\\|"));
         		observation=observation.replace("\r\n", "\n");
+        		observation=observation.replace("\n", "~");
 
         ConvertHL7String hl7String = new ConvertHL7String();
         CreateMshSegment(currentDateTimeString, hl7String.extraxtMSH(HL7Strings, "MSH", 12));
@@ -282,7 +283,7 @@ public class OurOruR01MessageBuilder {
     }
 
     private void CreateObxSegment(List<String> obxHL7Strings, String observation1) throws DataTypeException, IOException {
-    	if(obxHL7Strings != null && obxHL7Strings.size() > 0) {
+    	//if(obxHL7Strings != null && obxHL7Strings.size() > 0) {
         ORU_R01_OBSERVATION observation = _oruR01Message.getPATIENT_RESULT().getORDER_OBSERVATION().getOBSERVATION(0);
         OBX obx = observation.getOBX();
         obx.getSetIDOBX().setValue("0");
@@ -299,7 +300,7 @@ public class OurOruR01MessageBuilder {
         //encapsulatedData.getData().setValue(base64EncodedStringOfPdfReport);
         encapsulatedData.getData().setValue(observation1);
         value.setData(encapsulatedData);
-    	}
+    	//}
     }
 
     private String getCurrentTimeStamp() {
