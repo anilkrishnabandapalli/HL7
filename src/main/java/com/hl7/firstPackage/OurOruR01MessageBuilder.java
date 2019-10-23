@@ -149,7 +149,13 @@ public class OurOruR01MessageBuilder {
         		"";
         		List<String> HL7Strings = Arrays.asList(hl7Message.split("\\|"));
         		observation=observation.replace("\r\n", "\n");
-        		observation=observation.replace("\n", "~");
+        		String[] nteComments = observation.split("\n");
+        		int i = 0;
+        		for(String nteComm : nteComments) {
+        			CreateNTESegment(nteComm, i++);	
+        		}
+        		//observation=observation.replace("\n", "\\\n");
+        		//observation=observation.replace("\n", "                                                                                                    ");
 
         ConvertHL7String hl7String = new ConvertHL7String();
         CreateMshSegment(currentDateTimeString, hl7String.extraxtMSH(HL7Strings, "MSH", 12));
@@ -158,7 +164,7 @@ public class OurOruR01MessageBuilder {
         CreateORCSegment(hl7String.extraxtMSH(HL7Strings, "ORC", 13));
         CreateObrSegment(hl7String.extraxtMSH(HL7Strings, "OBR", 28));
         CreateObxSegment(hl7String.extraxtMSH(HL7Strings, "OBX", 16), observation);
-        CreateNTESegment(hl7String.extraxtMSH(HL7Strings, "NTE", 0), observation);
+        //CreateNTESegment(hl7String.extraxtMSH(HL7Strings, "NTE", 0), observation);
         return _oruR01Message;
     }
 
@@ -166,6 +172,12 @@ public class OurOruR01MessageBuilder {
 		NTE nte = _oruR01Message.getPATIENT_RESULT().getPATIENT().getNTE();
 		
 		nte.getComment(0).setValue(observation);
+	}
+    
+    private void CreateNTESegment(String observation, int i) throws DataTypeException  {
+		NTE nte = _oruR01Message.getPATIENT_RESULT().getPATIENT().getNTE();
+		
+		nte.getComment(i).setValue(observation);
 	}
 
 	private void CreateORCSegment(List<String> extraxtORC) throws DataTypeException {
