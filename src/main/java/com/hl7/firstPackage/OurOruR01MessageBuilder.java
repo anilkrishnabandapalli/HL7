@@ -150,11 +150,18 @@ public class OurOruR01MessageBuilder {
         		List<String> HL7Strings = Arrays.asList(hl7Message.split("\\|"));
         		observation=observation.replace("\r\n", "\n");
         		String[] nteComments = observation.split("\n");
-        		int i = 0;
+        		String newObservation = "";
         		for(String nteComm : nteComments) {
-        			CreateNTESegment(nteComm, i++);	
+        			int spacesNeeded = 100 - (nteComm.length() % 100);
+        			String spacesString = "";
+        			for(int i=0; i<spacesNeeded; i++)
+        			{
+        				spacesString = spacesString + " ";
+        			}
+        			newObservation = newObservation + nteComm + spacesString;
+        			System.out.println("Hi"+newObservation);
         		}
-        		//observation=observation.replace("\n", "\\\n");
+        		//observation=observation.replace("\n", "\r\n");
         		//observation=observation.replace("\n", "                                                                                                    ");
 
         ConvertHL7String hl7String = new ConvertHL7String();
@@ -163,8 +170,8 @@ public class OurOruR01MessageBuilder {
         CreatePv1Segment(hl7String.extraxtMSH(HL7Strings, "PV1", 9));
         CreateORCSegment(hl7String.extraxtMSH(HL7Strings, "ORC", 13));
         CreateObrSegment(hl7String.extraxtMSH(HL7Strings, "OBR", 28));
-        CreateObxSegment(hl7String.extraxtMSH(HL7Strings, "OBX", 16), observation);
-        //CreateNTESegment(hl7String.extraxtMSH(HL7Strings, "NTE", 0), observation);
+        CreateObxSegment(hl7String.extraxtMSH(HL7Strings, "OBX", 16), newObservation);
+        CreateNTESegment(hl7String.extraxtMSH(HL7Strings, "NTE", 0), newObservation);
         return _oruR01Message;
     }
 
