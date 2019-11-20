@@ -149,6 +149,7 @@ public class OurOruR01MessageBuilder {
         		"";
         		List<String> HL7Strings = Arrays.asList(hl7Message.split("\\|"));
         		observation=observation.replace("\r\n", "\n");
+        		observation=observation.replace("  ", " ");
         		String[] nteComments = observation.split("\n");
         		String newObservation = "";
         		for(String nteComm : nteComments) {
